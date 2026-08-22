@@ -1,0 +1,15 @@
+{
+  "description": "Test prompts for the customer support chatbot. 'category' is the ground-truth label the flow must predict.",
+  "test_cases": [
+    {"prompt": "The checkout button doesn't work, it just spins forever when I click pay.", "category": "bug_report", "notes": "explicit bug"},
+    {"prompt": "I got an error message when logging in: 'invalid session'.", "category": "bug_report", "notes": "error message"},
+    {"prompt": "My order #48291 is missing one of the items I paid for.", "category": "bug_report", "notes": "missing item"},
+    {"prompt": "How long does standard shipping take?", "category": "platform_question", "notes": "shipping"},
+    {"prompt": "Can I return an item after 30 days?", "category": "platform_question", "notes": "returns policy"},
+    {"prompt": "Which payment methods do you accept?", "category": "platform_question", "notes": "payments"},
+    {"prompt": "Where can I find my order history?", "category": "platform_question", "notes": "orders"},
+    {"prompt": "Do you ship to Canada?", "category": "platform_question", "notes": "international shipping"},
+    {"prompt": "What's the weather like today?", "category": "other", "notes": "off-topic"},
+    {"prompt": "I want to speak to a human about a refund dispute.", "category": "other", "notes": "escalation"}
+  ]
+}

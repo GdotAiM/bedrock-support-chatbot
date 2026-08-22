@@ -1,0 +1,41 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+eval/run_result.jsonl
+eval/bedrock_eval_dataset.jsonl
+logins.txt
+*.xlsx
+*.key
+*.pem
+*.p12
+
+# Internal deployment scripts (contain account-specific configs)
+cloudformation*.yaml
+deployed-eval.ps1
+verify-and-eval.ps1
+create_eval_job.py
+playwright-rubric-screenshots.js
+
+# Internal architecture docs (contain full ARNs and account details)
+AUDIT_REPORT.md
+SYSTEM_AUDIT.md
+AGENTCORE_GATEWAY_INTEGRATION.md
+PROJECT_PLAN.md
+MIGRATE_TO_BEDROCK_FLOWS.md
+
+# Flow definitions (internal infrastructure)
+bedrock/flow_definition*.json
+
+# Credentials and sensitive data
+logins.txt
+*.xlsx
+*.key
+*.pem
+*.p12
+.env
+
+# Eval results (may contain PII)
+eval/run_result*.jsonl
+eval/bedrock_eval_dataset.jsonl
+EVAL_SUMMARY.json
