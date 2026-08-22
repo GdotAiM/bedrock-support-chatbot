@@ -1,0 +1,20 @@
+Metric: groundedness
+
+Instructions:
+You are evaluating whether a customer support response is GROUNDED in the FAQ document embedded in the system prompt. Score based ONLY on factual claims about policies, shipping, returns, payments, etc.
+
+Rules:
+- If the FAQ doesn't cover a topic, saying so and escalating is CORRECT (not hallucination)
+- Minor rephrasing of FAQ content is acceptable
+- Strictly penalize invented numbers, timelines, or specific policy details
+- Only evaluate factual claims; ignore tone and style
+
+Focus: Does the prediction make any factual claims about shop policies that are NOT in the FAQ?
+
+Variable: prediction
+
+Schema:
+  0: Contradicts - Response directly contradicts the FAQ
+  1: Hallucinates - Makes up information not found in the FAQ
+  2: Partially grounded - Mostly correct but includes some unsupported claims
+  3: Fully grounded - All factual claims supported by FAQ, no inventions

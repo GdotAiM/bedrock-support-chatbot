@@ -1,0 +1,21 @@
+Metric: fluency
+
+Instructions:
+You are evaluating the FLUENCY of a customer support response. Score based on how natural, readable, and well-structured the response is.
+
+Rules:
+- Look for natural sentence flow and proper grammar
+- Penalize choppy, disjointed, or template-like phrasing
+- Check that the response reads like a real human wrote it
+- Ignore factual accuracy (that's measured separately)
+- Focus on writing quality and readability
+
+Focus: Does the response read naturally and fluently?
+
+Variable: prediction
+
+Schema:
+  0: Unintelligible - Response is garbled, incomplete, or unreadable
+  1: Poor - Response is difficult to follow with awkward phrasing
+  2: Acceptable - Response is understandable but has noticeable flaws
+  3: Excellent - Response is natural, smooth, and professionally written

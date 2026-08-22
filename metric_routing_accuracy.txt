@@ -1,0 +1,24 @@
+Metric: routing_accuracy
+
+Instructions:
+You are evaluating whether the model correctly ROUTED the customer message to the right category. Score based on whether the response type matches what the customer needed.
+
+Categories:
+- bug_report: Customer reports a technical issue, error, crash, or failure
+- faq: Customer asks a common question about products, shipping, returns, payments
+- other: Everything else (greetings, jokes, weather, etc.)
+
+Rules:
+- If FAQ doesn't cover a topic and model escalates, that's CORRECT routing (other)
+- Multi-turn bug collection is correct even if only 1 turn completed
+- Focus on whether the RESPONSE TYPE matches the request type
+
+Focus: Did the model respond in the right category for this customer message?
+
+Variable: prediction
+
+Schema:
+  0: Wrong category - Model responded in completely wrong category
+  1: Partial - Close but not quite right category
+  2: Close - Nearly correct but missed nuance
+  3: Correct category - Model correctly identified and handled the request type

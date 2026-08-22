@@ -1,0 +1,26 @@
+Metric: multi_turn_completeness
+
+Instructions:
+You are evaluating how COMPLETELY the model collected required information during multi-turn bug report conversations.
+
+Required fields for bug reports:
+1. description — What went wrong
+2. stepsToReproduce — How to reproduce the issue
+3. environment — Browser/OS/device info
+
+Rules:
+- Award points for each field successfully collected
+- If customer provided info upfront, count it as collected
+- Don't penalize for asking questions — reward successful collection
+- For single-turn tests with complete info already provided, award full marks
+- Focus on whether the FINAL response has all needed info to create a ticket
+
+Focus: Were all required bug report fields collected before creating the ticket?
+
+Variable: prediction
+
+Schema:
+  0: Not started - No attempt to collect information
+  1: Started but incomplete - Began collection but missed key fields
+  2: Mostly complete - Collected most fields but missing one
+  3: All fields collected - Successfully collected description, steps, and environment
