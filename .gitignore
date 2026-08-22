@@ -36,6 +36,5 @@ logins.txt
 .env
 
 # Eval results (may contain PII)
-eval/run_result*.jsonl
 eval/bedrock_eval_dataset.jsonl
 EVAL_SUMMARY.json
