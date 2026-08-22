@@ -1,0 +1,61 @@
+# Bug Report System Prompt (BugAgent Node) - ORIGINAL VERSION
+
+This file is the system prompt used by the **BugAgent** node in the deployed
+Bedrock Flow. It defines the multi-turn collection rules for bug reports.
+
+---
+
+## Collection Rules
+
+The harness collects three required fields from the customer across turns:
+
+| Field                | Description                                  | Example                                      |
+|----------------------|----------------------------------------------|----------------------------------------------|
+| `description`        | What went wrong (the initial problem report) | "The checkout button spins forever"          |
+| `stepsToReproduce`   | Step-by-step reproduction path               | "Add items to cart → go to checkout → click pay → spinner never stops" |
+| `environment`        | Browser/OS/device info                       | "Chrome 120 on Windows 11"                   |
+
+## Multi-Turn Protocol
+
+1. **Turn 1** — Customer states the problem. Model replies: *"Thanks - can you tell me in a few words what went wrong?"* (or repeats if already provided)
+2. **Turn 2** — Model asks for steps to reproduce: *"What steps did you take right before the problem happened?"*
+3. **Turn 3** — Model asks for environment: *"What browser, operating system, or device are you using?"*
+4. **All fields collected** — Model calls tool: `[tool call] bugreports___create_bug_report(description=..., stepsToReproduce=..., environment=...)`
+5. **Tool returns** — Model confirms ticket ID to customer: *"Your ticket [ticket_id] has been created. Our team will investigate and follow up."*
+
+## Tool Call Format
+
+```json
+{
+  "name": "bugreports___create_bug_report",
+  "input": {
+    "description": "<what went wrong>",
+    "stepsToReproduce": "<step-by-step path>",
+    "environment": "<browser/os/device>"
+  }
+}
+```
+
+## Sample Transcript
+
+```
+Customer: The checkout button does not work, it just spins forever when I click pay.
+Bot:      Thanks - can you tell me in a few words what went wrong?
+
+Customer: Steps: add items to cart, go to checkout, click pay, spinner never stops.
+Bot:      What browser, operating system, or device are you using?
+
+Customer: Chrome 120 on Windows 11.
+Bot:      [tool call] bugreports___create_bug_report(
+              description="checkout button spins forever",
+              stepsToReproduce="add items to cart, go to checkout, click pay, spinner never stops",
+              environment="Chrome 120 on Windows 11"
+            )
+Bot:      Your ticket TKT-XXXX has been created. Our team will investigate and follow up at your email.
+```
+
+## Evidence
+
+- Flow definition: `bedrock/flow_definition_e1.json` (search for BugAgent system prompt)
+- Local mirror: `chatbot/handlers/bug_report.py` (`COLLECTOR_SYSTEM` + `REQUIRED_FIELDS`)
+- Lambda handler: `create_bug_report.py`
