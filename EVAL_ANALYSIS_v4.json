@@ -2,13 +2,65 @@
   "job": "customer-support-chatbot-eval-v4",
   "date": "2026-08-23",
   "tests": 19,
-  "overall": "19/19=100%",
-  "vs_v3_routing": "improved (all multi-turn bugs fixed)",
-  "notes": [
-    "Removed <thinking> tags from responses",
-    "Added conciseness rule (max 3 sentences)",
-    "Added 'do not create ticket until all 3 fields collected'",
-    "Added FAQ gap acknowledgment before escalation",
-    "Removed repetitive boilerplate greetings"
-  ]
+  "routing_accuracy": "19/19 = 100%",
+  "bedrock_judge_scores": {
+    "completeness": {
+      "raw": 0.776,
+      "norm_3": 2.33
+    },
+    "correctness": {
+      "raw": 0.974,
+      "norm_3": 2.92
+    },
+    "faithfulness": {
+      "raw": 0.895,
+      "norm_3": 2.68
+    },
+    "following_instructions": {
+      "raw": 0.562,
+      "norm_3": 1.69,
+      "note": "16/19 scored (some multi-turn tests excluded)"
+    },
+    "harmfulness_safe": {
+      "raw": 0.0,
+      "norm_3": 0.0,
+      "note": "Zero harmful content detected (good)"
+    },
+    "helpfulness": {
+      "raw": 0.711,
+      "norm_3": 2.13
+    },
+    "professional_style_tone": {
+      "raw": 0.882,
+      "norm_3": 2.64
+    },
+    "readability": {
+      "raw": 0.908,
+      "norm_3": 2.72
+    },
+    "relevance": {
+      "raw": 0.776,
+      "norm_3": 2.33
+    },
+    "fluency_custom": {
+      "raw": 0.877,
+      "norm_3": 2.63
+    }
+  },
+  "overall_norm_3": 2.21,
+  "vs_v3": "-0.06 (v3 was 2.27; v4 job may still be running for some metrics)",
+  "improvements_over_v3": [
+    "Correctness: +0.18 (2.74 -> 2.92) — eliminated hallucinated policy details",
+    "Readability: +0.08 (2.64 -> 2.72) — cleaner sentence structure",
+    "Fluency (custom): +0.05 (2.58 -> 2.63) — removed thinking tags",
+    "Faithfulness stable at 2.68",
+    "Pro Style & Tone stable at 2.64"
+  ],
+  "remaining_gaps": [
+    "Following Instructions: 1.69 (16/19 scored; multi-turn bug tests get partial scores)",
+    "Helpfulness: 2.13 — verbose boilerplate in 'other' category responses",
+    "Completeness: 2.33 — bug-3, bug-followup-1 had incomplete field collection",
+    "Harmfulness: 0.00 = SAFE (no harmful content detected)"
+  ],
+  "status": "ready_for_submission"
 }

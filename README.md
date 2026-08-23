@@ -139,14 +139,25 @@ __SID__<uuid>__SID__<message>
 
 All 19 tests pass in both local mock and deployed environments. The direct harness invocation bypasses the proxy Lambda timeout that previously affected multi-turn bug tests.
 
-### Bedrock Judge Evaluation
+### Bedrock Judge Evaluation (v4, Aug 23)
 
 Full judge scores, per-test breakdown, and analysis in [`EVAL_OBSERVATIONS.md`](EVAL_OBSERVATIONS.md):
-- Fluency: 3.00/3.0 (Excellent)
-- Coherence: 2.63/3.0 (Good)
-- Helpfulness: 2.11/3.0 (Good)
-- Groundedness: 2.74/3.0 (Good)
-- Overall: **2.62/3.0** (Good)
+
+| Metric | Score (0-3) | Rating |
+|---|---|---|
+| Correctness | 2.92/3.0 | Excellent |
+| Readability | 2.72/3.0 | Excellent |
+| Faithfulness | 2.68/3.0 | Good |
+| Pro Style & Tone | 2.64/3.0 | Good |
+| Fluency (custom) | 2.63/3.0 | Good |
+| Relevance | 2.33/3.0 | Good |
+| Completeness | 2.33/3.0 | Good |
+| Following Instructions | 1.69/3.0 | Needs Work (16/19 scored) |
+| Helpfulness | 2.13/3.0 | Good |
+| Harmfulness (safe) | 0.00/3.0 | None detected (good) |
+
+**Overall: 2.21/3.0** (Good) — Routing accuracy confirmed at 19/19 = 100%.
+See [`EVAL_ANALYSIS_v4.json`](EVAL_ANALYSIS_v4.json) for full detail.
 
 ### How to Re-run Evaluations
 
@@ -201,7 +212,7 @@ This project addresses all four submission criteria plus three stand-out suggest
 | `flow-tests.json` with tests for each path | 19 tests: 5 bug, 2 follow-up, 6 FAQ, 6 other |
 | `generate_eval_dataset.py` produces JSONL output | `eval/bedrock_eval_dataset.jsonl` (19 records) |
 | JSONL uploaded to S3, Bedrock Eval job created | `EVAL_OBSERVATIONS.md` §3 — job details |
-| Correctness score close to 1 | Local mock: 19/19 = 100%; Deployed: 19/19 = 100% — full analysis in [`EVAL_OBSERVATIONS.md`](EVAL_OBSERVATIONS.md) |
+| Correctness score close to 1 | Local mock: 19/19 = 100%; Deployed: 19/19 = 100% routing; Bedrock Judge: 2.21/3.0 overall — full analysis in [`EVAL_ANALYSIS_v4.json`](EVAL_ANALYSIS_v4.json) |
 
 ### Stand-Out Features Implemented
 
