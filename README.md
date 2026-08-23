@@ -273,6 +273,28 @@ The deployed classifier is stateless (no memory of prior turns). Messages like "
 | `SYSTEM_AUDIT.md` | System architecture documentation |
 | `online_shop_faq.md` | FAQ reference document embedded in AnswerFAQ prompt |
 
+## Rubric Evidence (Screenshots)
+
+Screenshots are stored in [`screenshots/`](screenshots/):
+
+| Screenshot | Description |
+|---|---|
+| `flow-diagram.png` | Full Bedrock Flow architecture diagram |
+| `classifier-prompt.png` | ClassifyMessage prompt node (4-category classifier) |
+| `classifier-prompt-original.png` | Original classifier prompt for comparison |
+| `routing-condition-1.png` | RouteByCategory condition node (bug_report) |
+| `routing-condition-2.png` | RouteByCategory condition node (faq) |
+| `routing-condition-3.png` | RouteByCategory condition node (other) |
+| `faq-prompt-template.png` | AnswerFAQ prompt template |
+| `faq-prompt-embedded.png` | FAQ prompt with embedded knowledge base |
+| `faq-gap-response.png` | FAQ gap — uncovered question handled correctly |
+| `other-request-response.png` | Other request — human support redirect |
+| `flow-test-faq-pass.png` | Flow test response for covered FAQ question |
+| `dynamodb-table.png` | DynamoDB BugReports-use1 table with tickets |
+| `eval-v3-results.png` | Bedrock Evaluation v3 results page |
+| `eval-v4-job-config.png` | Bedrock Evaluation v4 job configuration |
+| `eval-v4-results.png` | Bedrock Evaluation v4 results page |
+
 ## Getting Started
 
 ```powershell

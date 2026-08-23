@@ -38,3 +38,15 @@ logins.txt
 # Eval results (may contain PII)
 eval/bedrock_eval_dataset.jsonl
 EVAL_SUMMARY.json
+
+# Screenshots / rubric evidence (included in submission)
+# No exclusion — these are part of the deliverables
+
+# Eval result variants (keep only v4)
+eval/run_result_deployed.jsonl
+eval/run_result_deployed_final.jsonl
+eval/run_result_deployed_v3.jsonl
+eval/run_result_deployed_v3_cleaned.jsonl
+eval/bedrock_eval_dataset.jsonl
+eval/bedrock_eval_dataset_v2.jsonl
+eval/bedrock_eval_dataset_v3.jsonl
