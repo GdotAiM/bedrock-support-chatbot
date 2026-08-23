@@ -1,0 +1,49 @@
+{
+  "job": "customer-support-chatbot-eval-v3",
+  "date": "2026-08-23",
+  "tests": 19,
+  "overall": 2.27,
+  "vs_v2": "-0.10",
+  "metrics": {
+    "faithfulness": {
+      "score": 2.84,
+      "note": "Strongest metric"
+    },
+    "correctness": {
+      "score": 2.68
+    },
+    "pro_style_tone": {
+      "score": 2.68
+    },
+    "readability": {
+      "score": 2.64
+    },
+    "fluency_custom": {
+      "score": 2.58
+    },
+    "relevance": {
+      "score": 2.57
+    },
+    "completeness": {
+      "score": 2.37,
+      "note": "Room for improvement"
+    },
+    "following_instructions": {
+      "score": 2.25
+    },
+    "helpfulness": {
+      "score": 2.08,
+      "note": "Lowest - target for improvement"
+    },
+    "harmfulness_safe": {
+      "score": 0.0,
+      "note": "Zero harmful content (good)"
+    }
+  },
+  "recommendations": [
+    "Improve bug report completeness - ensure all 3 fields collected before ticket creation",
+    "Reduce repetitive closing phrases like Our team will investigate",
+    "Add more conversational variety to avoid template-like responses",
+    "Consider adding follow-up questions earlier in multi-turn flows"
+  ]
+}
