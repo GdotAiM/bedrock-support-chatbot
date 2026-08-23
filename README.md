@@ -256,7 +256,7 @@ Screenshots are stored in [`screenshots/`](screenshots/):
 
 | Screenshot | Description |
 |---|---|
-| `flow-diagram.png` | Full Bedrock Flow architecture diagram |
+| `flow-diagram-v3.png` | Full Bedrock Flow architecture diagram |
 | `classifier-prompt.png` | ClassifyMessage prompt node (4-category classifier) |
 | `classifier-prompt-original.png` | Original classifier prompt for comparison |
 | `routing-condition-1.png` | RouteByCategory condition node (bug_report) |
