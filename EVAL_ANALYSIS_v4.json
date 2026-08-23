@@ -1,0 +1,14 @@
+{
+  "job": "customer-support-chatbot-eval-v4",
+  "date": "2026-08-23",
+  "tests": 19,
+  "overall": "19/19=100%",
+  "vs_v3_routing": "improved (all multi-turn bugs fixed)",
+  "notes": [
+    "Removed <thinking> tags from responses",
+    "Added conciseness rule (max 3 sentences)",
+    "Added 'do not create ticket until all 3 fields collected'",
+    "Added FAQ gap acknowledgment before escalation",
+    "Removed repetitive boilerplate greetings"
+  ]
+}
