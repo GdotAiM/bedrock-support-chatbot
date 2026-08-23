@@ -4,37 +4,14 @@ A customer support chatbot for a fictional online shop ("NextCart") built using 
 
 ## Project Overview
 
-```
-Customer Message
-       │
-       ▼
-┌─────────────────────┐
-│  ClassifyMessage     │  ← Prompt node (Nova Lite, temp=0)
-│  + Guardrail v1      │     Returns JSON {category, confidence, reason}
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  NormalizeCategory   │  ← InlineCode node
-│  (JSON parser)       │     Validates → bug_report | faq | other | bug_followup
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  RouteByCategory     │  ← Condition node (exact string match)
-└──┬────────┬─────────┬┘
-   │        │         │
-   ▼        ▼         ▼
-┌──────┐ ┌──────┐ ┌──────────┐
-│BugAgent│ │AnswerFAQ│ │HumanSupport│
-│(Lambda)│ │ (Prompt)│ │ (Prompt)  │
-└───┬────┘ └───┬────┘ └────┬─────┘
-    │          │           │
-    ▼          ▼           ▼
-┌──────┐ ┌─────────┐ ┌─────────┐
-│BugOutput│ │FAQOutput│ │OtherOutput│
-└──────┘ └─────────┘ └─────────┘
-```
+Architecture diagram (Flow Version 3):
+
+![Bedrock Flow Architecture](screenshots/flow-diagram-v3.png)
+
+**Flow summary:** Customer message enters `FlowInput` → `StripSession` removes `__SID__` token → `ClassifyMessage` (Nova Lite, guardrail v1) classifies into one of 4 categories → `NormalizeCategory` validates JSON output → `RouteByCategory` conditions route to:
+- **bug_report / bug_followup** → `BugAgent` (Lambda → AgentCore harness, multi-turn collection → DynamoDB ticket)
+- **faq** → `AnswerFAQ` (embedded FAQ knowledge base)
+- **other** → `HumanSupport` (polite redirect to 1-800-555-0199)
 
 ## Quick Start
 
