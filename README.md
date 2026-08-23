@@ -165,6 +165,14 @@ This project addresses all four submission criteria plus three stand-out suggest
 | Messages routed to distinct paths based on category | 3 separate handler paths (BugAgent / AnswerFAQ / HumanSupport) |
 | Distinct paths terminate at separate Output nodes | Flow diagram above + `bedrock/flow_definition_e1.json` |
 
+![ClassifyMessage Prompt](screenshots/classifier-prompt.png)
+*ClassifyMessage prompt node — 4-category JSON output with guardrail v1.*
+
+![RouteByCategory Conditions](screenshots/routing-condition-1.png)
+![RouteByCategory Conditions (faq)](screenshots/routing-condition-2.png)
+![RouteByCategory Conditions (other)](screenshots/routing-condition-3.png)
+*RouteByCategory condition node — exact string matching for bug_report / faq / other branches.*
+
 ### 2. Bug Report Path
 
 | Requirement | Evidence |
@@ -174,6 +182,9 @@ This project addresses all four submission criteria plus three stand-out suggest
 | Assistant collects description, steps, environment across conversation | Multi-turn transcript in `system_prompt.txt` |
 | Record created in DynamoDB table | Lambda handler in `create_bug_report.py`; table `BugReports-use1` |
 
+![DynamoDB BugReports Table](screenshots/dynamodb-table.png)
+*BugReports-use1 DynamoDB table — tickets created by the harness via AgentCore gateway.*
+
 ### 3. Platform Question and Other Request Paths
 
 | Requirement | Evidence |
@@ -181,6 +192,15 @@ This project addresses all four submission criteria plus three stand-out suggest
 | Relevant answer when question covered by FAQ | `chatbot/handlers/faq.py` — FAQ-based answering with `online_shop_faq.md` |
 | Directs user to support phone number when FAQ doesn't cover | `chatbot/handlers/other.py` — redirects to `1-800-555-0199` |
 | Separate path for other requests | "other" category → HumanSupport handler |
+
+![FAQ Prompt with Embedded Knowledge Base](screenshots/faq-prompt-embedded.png)
+*AnswerFAQ prompt node — full FAQ embedded inline; guardrail active.*
+
+![FAQ Gap Response](screenshots/faq-gap-response.png)
+*FAQ gap handled correctly — model acknowledges the topic is uncovered and escalates to a human agent.*
+
+![Other Request Redirect](screenshots/other-request-response.png)
+*Other request — non-FAQ, non-bug message politely redirected to human support.*
 
 ### 4. Testing and Evaluation
 
@@ -190,6 +210,12 @@ This project addresses all four submission criteria plus three stand-out suggest
 | `generate_eval_dataset.py` produces JSONL output | `eval/bedrock_eval_dataset.jsonl` (19 records) |
 | JSONL uploaded to S3, Bedrock Eval job created | `EVAL_OBSERVATIONS.md` §3 — job details |
 | Correctness score close to 1 | Local mock: 19/19 = 100%; Deployed: 19/19 = 100% routing; Bedrock Judge: 2.21/3.0 overall — full analysis in [`EVAL_ANALYSIS_v4.json`](EVAL_ANALYSIS_v4.json) |
+
+![Bedrock Evaluation v4 Job Config](screenshots/eval-v4-job-config.png)
+*Bedrock Evaluation job configuration — BYOI dataset, Nova Pro evaluator, custom fluency metric.*
+
+![Bedrock Evaluation v4 Results](screenshots/eval-v4-results.png)
+*Bedrock Evaluation v4 results — 19/19 tests scored across all 9 metrics.*
 
 ### Stand-Out Features Implemented
 
@@ -250,27 +276,6 @@ The deployed classifier is stateless (no memory of prior turns). Messages like "
 | `SYSTEM_AUDIT.md` | System architecture documentation |
 | `online_shop_faq.md` | FAQ reference document embedded in AnswerFAQ prompt |
 
-## Rubric Evidence (Screenshots)
-
-Screenshots are stored in [`screenshots/`](screenshots/):
-
-| Screenshot | Description |
-|---|---|
-| `flow-diagram-v3.png` | Full Bedrock Flow architecture diagram |
-| `classifier-prompt.png` | ClassifyMessage prompt node (4-category classifier) |
-| `classifier-prompt-original.png` | Original classifier prompt for comparison |
-| `routing-condition-1.png` | RouteByCategory condition node (bug_report) |
-| `routing-condition-2.png` | RouteByCategory condition node (faq) |
-| `routing-condition-3.png` | RouteByCategory condition node (other) |
-| `faq-prompt-template.png` | AnswerFAQ prompt template |
-| `faq-prompt-embedded.png` | FAQ prompt with embedded knowledge base |
-| `faq-gap-response.png` | FAQ gap — uncovered question handled correctly |
-| `other-request-response.png` | Other request — human support redirect |
-| `flow-test-faq-pass.png` | Flow test response for covered FAQ question |
-| `dynamodb-table.png` | DynamoDB BugReports-use1 table with tickets |
-| `eval-v3-results.png` | Bedrock Evaluation v3 results page |
-| `eval-v4-job-config.png` | Bedrock Evaluation v4 job configuration |
-| `eval-v4-results.png` | Bedrock Evaluation v4 results page |
 
 ## Getting Started
 
