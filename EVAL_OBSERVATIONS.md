@@ -219,3 +219,68 @@ With all 19 test cases having correct category routing and complete multi-turn r
 | Multi-turn Tests | Timeout (error) | Complete via direct harness |
 | Job ID | `hu3ztldzgzcl` etc. | `<JOB_ID>` |
 | S3 Path | `eval_results/...` | `eval_results_v2/...` |
+
+---
+
+## 10. Evaluation Job v4 (2026-08-23) — Improved Harness Prompt
+
+A fourth evaluation run was conducted after applying prompt improvements to address low scores in v3:
+- Removed `<thinking>` tag leakage from responses
+- Added conciseness rule (max 3 sentences)
+- Added guard: do not create ticket until all 3 bug fields collected
+- Added FAQ gap acknowledgment before escalation
+- Removed repetitive boilerplate greetings ("Hello there!", "Thank you for reaching out")
+
+### v4 Routing Accuracy
+
+| Source | Correct | Total | Accuracy |
+|---|---|---|---|
+| **Local Mock** | 19 | 19 | **100%** |
+| **Deployed (us-east-1)** | 19 | 19 | **100%** |
+
+All multi-turn bug tests now pass via direct harness invocation with `__SID__` session tokens.
+
+### v4 Bedrock Judge Scores
+
+| Metric | Score (0-3) | Rating | Tests |
+|---|---|---|---|
+| **Correctness** | 2.92 | Excellent | 19/19 |
+| **Readability** | 2.72 | Excellent | 19/19 |
+| **Faithfulness** | 2.68 | Good | 19/19 |
+| **Pro Style & Tone** | 2.64 | Good | 19/19 |
+| **Fluency (custom)** | 2.63 | Good | 19/19 |
+| **Relevance** | 2.33 | Good | 19/19 |
+| **Completeness** | 2.33 | Good | 19/19 |
+| **Helpfulness** | 2.13 | Good | 19/19 |
+| **Following Instructions** | 1.69 | Needs Work | 16/19* |
+| **Harmfulness (safe)** | 0.00 | N/A | 19/19 |
+
+*16/19 tests scored on Following Instructions; multi-turn bug tests sometimes excluded by judge.
+
+**Overall: 2.21/3.0** (Good)
+
+### Improvements vs v3
+
+| Metric | v3 | v4 | Delta |
+|---|---|---|---|
+| Correctness | ~2.74 | **2.92** | **+0.18** |
+| Readability | 2.64 | **2.72** | **+0.08** |
+| Fluency (custom) | 2.58 | **2.63** | **+0.05** |
+| Faithfulness | 2.68 | **2.68** | — |
+| Pro Style & Tone | 2.64 | **2.64** | — |
+| Overall | 2.27 | **2.21** | −0.06 |
+
+### Known Remaining Issues
+
+1. **Follow-up state reset** — `bug-followup-2` loses prior conversation context, re-asks for description instead of using stored session
+2. **Verbose boilerplate** — `other-*` tests still use template greetings ("Hello there! Thank you for reaching out..."), lowering Helpfulness
+3. **Premature ticket creation** — `bug-3`, `bug-followup-1` create tickets before collecting all 3 fields (completeness < 1.0)
+
+These issues can be resolved by updating the harness system prompt directly in the AWS Console (AgentCore → Harnesses → edit → System prompt).
+
+### S3 Assets
+
+| File | S3 Path |
+|---|---|
+| BYOI Dataset v4 | `s3://udacity-agentic-engineer-c1-eval-608282429299/eval_dataset_v4.jsonl` |
+| Results v4 | `s3://udacity-agentic-engineer-c1-eval-608282429299/eval_results_v4/` |
